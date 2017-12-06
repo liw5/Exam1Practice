@@ -2,8 +2,8 @@
 PRACTICE Test 1, problem 3.
 
 Authors: David Mutchler, Valerie Galluzzi, Mark Hays, Amanda Stouder,
-         their colleagues and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+         their colleagues and Wenxing Li.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import rosegraphics as rg
 
@@ -37,7 +37,7 @@ def main():
 def run_test_problem3a():
     """ Tests the   problem3a   function. """
     # ------------------------------------------------------------------
-    # TODO: 2. Implement this TEST function.
+    # DONE: 2. Implement this TEST function.
     #   It TESTS the  problem1a  function defined below.
     #   Include at least **   5   ** tests (we wrote four for you).
     # ------------------------------------------------------------------
@@ -97,6 +97,18 @@ def run_test_problem3a():
 
     window3.close_on_mouse_click()
 
+    # Window 4:
+    title = 'Problem 3a. Test 5: Start at (25,25), 10 lines'
+    window4 = rg.RoseWindow(450,300,title)
+
+    # Test 5 (It is on window 4)
+    point = rg.Point(25,25)
+    expected =88
+    answer = problem3a(window4, point,10)
+    print()
+    print('Test 5 expected:', expected)
+    print('       actual:  ', answer)
+
     # ------------------------------------------------------------------
     # TO DO: 2 (continued).
     # Below this comment (or integrated with one of the above tests,
@@ -105,6 +117,30 @@ def run_test_problem3a():
 
 
 def problem3a(window, point, n):
+    sum_of_thickness = 0
+    for k in range(n):
+        if 1+2*k<=13:
+            thickness = 1+2*k
+        else:
+            thickness = 13
+        sum_of_thickness = sum_of_thickness+thickness
+
+
+    for k in range(n):
+        point = rg.Point(point.x + 20, point.y + 10)
+        end_point = rg.Point(point.x, point.y + 50)
+        line = rg.Line(point, end_point)
+        if 1+2*k<=13:
+            thickness = 1+2*k
+        else:
+            thickness = 13
+        line.thickness = thickness
+        line.attach_to(window)
+    window.render(0.5)
+    return sum_of_thickness
+
+
+
     """
     See   problem3a_picture.pdf   in this project for pictures
     that may help you better understand the following specification:
@@ -137,7 +173,7 @@ def problem3a(window, point, n):
         :type n:      int
     """
     # ------------------------------------------------------------------
-    # TODO: 3. Implement and test this function.
+    # DONE: 3. Implement and test this function.
     #   Note that you should write its TEST function first (above).
     # ------------------------------------------------------------------
     # ------------------------------------------------------------------
@@ -165,6 +201,29 @@ def run_test_problem3b():
 
 
 def problem3b(m, point1):
+    window = rg.RoseWindow(400,650)
+
+    total = 0
+
+    for k in range(m):
+        point1_new = rg.Point(point1.x,point1.y+60*k)
+        problem3a(window,point1_new,1+2*k)
+
+        total = total + problem3a(window,point1_new,1+2*(k+1))
+
+    print('click mouse to close window')
+    window.close_on_mouse_click()
+
+    return total
+
+
+
+
+
+
+
+
+
     """
     See   problem3b_picture.pdf   in this project for pictures
     that may help you better understand the following specification:
@@ -201,7 +260,7 @@ def problem3b(m, point1):
         :type point1: rg.Point
     """
     # ------------------------------------------------------------------
-    # TODO: 4. Implement and test this function.
+    # DONE: 4. Implement and test this function.
     #          Tests have been written for you (above).
     #
     ####################################################################
